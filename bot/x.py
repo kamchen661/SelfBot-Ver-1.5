@@ -83,7 +83,7 @@ def sendMention(to, text="", mids=[]):
     cl.sendMessage(to, textx, {'MENTION': str('{"MENTIONEES":' + json.dumps(arr) + '}')}, 0)
 def helpmessage():
     helpMessage = """╔═══════════
-╠♥ ✿✿✿ 虎爺の單體半垢 ✿✿✿ ♥
+╠♥ ✿✿✿ の單體半垢 ✿✿✿ ♥
 ╠═✪〘 owners專用 〙✪═
 ╠✪〘 Help 〙✪═════
 ╠➥ Help 查看指令
