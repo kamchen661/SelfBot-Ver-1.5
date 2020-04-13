@@ -83,7 +83,7 @@ def sendMention(to, text="", mids=[]):
     cl.sendMessage(to, textx, {'MENTION': str('{"MENTIONEES":' + json.dumps(arr) + '}')}, 0)
 def helpmessage():
     helpMessage = """╔═══════════
-╠♥ ✿✿✿ の單體半垢 ✿✿✿ ♥
+╠🔥音速半垢🔥
 ╠═✪〘 owners專用 〙✪═
 ╠✪〘 Help 〙✪═════
 ╠➥ Help 查看指令
@@ -161,7 +161,8 @@ def helpmessage():
 ╠➥ Say [text times] 重複講話
 ╠➥ Tag @ [times] 重複標人
 ╠➥ Loli 抽蘿莉圖
-╚═〘 Created By 喵™ 〙"""
+╠➥ 抽/本日運勢 運勢
+╚═〘 🔥音速半垢🔥〙"""
     return helpMessage
 def helpm():
     helpM = """╔═══════════
@@ -206,7 +207,8 @@ def helpm():
 ╠➥ Banlist 查看黑單
 ╠➥ Banmidlist 查看黑單者mid
 ╠➥ Loli 抽蘿莉圖
-╚═〘 Created By 喵™ 〙"""
+╠➥ 抽/本日運勢 運勢
+╚═〘 🔥音速半垢🔥 〙"""
     return helpM
 wait = {
     "ban":False,
@@ -345,9 +347,13 @@ def lineBot(op):
                     cl.sendImage(to, "bot/linepy/loli/{}-monmon.png".format(str(random.randint(0,int(settings["monmonpic"]-1)))))
                 elif text.lower() in ['loli','抽蘿莉'] :
                     cl.sendImage(to, "bot/linepy/loli/{}-image.png".format(str(random.randint(0,int(settings["pic"]-1)))))
+                elif text.lower() in ['本日運勢','抽'］:
+                    a = random.choice(["大吉！！！運氣旺！ヽ(✿ﾟ▽ﾟ)ノ","中吉！運氣好～(ﾟ∀ﾟ)","小吉〜小有手氣(`・ω・´)","末吉〜還可以(,,・ω・,,)","吉〜普普通通～(´･ω･`)","凶〜有點不好(つд⊂)","大凶〜有點悲劇｡･ﾟ･(ﾉД`)ヽ(ﾟДﾟ )"])
+                    slot = "您今天的運氣\n{}<==\n以上是您的測試運氣結果".format(a)
+                    cl.sendMessage(to,slot)
             if sender in ban["admin"] or sender in ban["owners"]:
                 if text.lower() in ['speed','sp']:
-                    cl.sendMessage(to,"小喵極緩慢的測速中...\n結果約為"+str(timeit.timeit('"-".join(str(n) for n in range(100))',number=1000)) + "秒")
+                    cl.sendMessage(to,"⚡️音速極慢的測速中...\n結果約為"+str(timeit.timeit('"-".join(str(n) for n in range(100))',number=1000)) + "秒")
                 elif text.lower() == 'save':
                     backupData()
                     cl.sendMessage(to,"儲存設定成功!")
@@ -361,9 +367,9 @@ def lineBot(op):
                     if sender in ban["owners"]:ret_ += "\n╠ 使用者權限 : 最高(擁有者)"
                     elif sender in ban["admin"]:ret_ += "\n╠ 使用者權限 : 部分(權限者)"
                     elif sender in ban["blacklist"]:ret_ += "\n╠ 使用者權限 : 無(黑單者)"
-                    else:ret_ += "\n╠ 使用者權限 : 基本(抽圖片)"
+                    else:ret_ += "\n╠ 使用者權限 : 基本(抽圖片)和 運勢"
                     ret_ += "\n╠ 詳細功能請打help"
-                    ret_ += "\n╠ 擁有者 : 虎爺"
+                    ret_ += "\n╠ 擁有者 : 音速"
                     ret_ += "\n╚══[ 感謝您的使用 ]"
                     cl.sendMessage(to, str(ret_))
                 elif text.lower() == 'set':
@@ -1296,7 +1302,7 @@ def lineBot(op):
                         if clMID in mention["M"]:
                             if settings["detectMention"] == True:
                                 contact = cl.getContact(sender)
-                                sendMention(to,"@! 標毛?", [contact.mid])
+                                sendMention(to,"@! 標我幹嘛？在標不理你ㄌㄛ！", [contact.mid])
                             break
             try:
                 if to in settings["reread"]:
@@ -1314,7 +1320,7 @@ def lineBot(op):
                                 x=x.replace("@"+str(cl.getContact(mid).displayName),"@!")
                                 list+=mid+","
                             listt=list[:-1]
-                            msg_dict[msg.id] = {"mtext":"[收回訊息者]\n @! \n[訊息內容]\n"+x,"from":msg._from,"createdTime":time.time(),"mentionee":listt}
+                            msg_dict[msg.id] = {"mtext":"[抓到！收回訊息者]\n @! \n[訊息內容]\n"+x,"from":msg._from,"createdTime":time.time(),"mentionee":listt}
                         else:
                             msg_dict[msg.id] = {"text":msg.text,"from":msg._from,"createdTime":time.time()}
             except Exception as e:
@@ -1370,17 +1376,17 @@ def lineBot(op):
                             cl.sendMessage(at,"收回時間"+str(timeNow - msg_dict[msg_id]["createdTime"])+"秒之前")
                             del msg_dict[msg_id]
                         elif "text" in msg_dict[msg_id]:
-                            sendMention(at,"[收回訊息者]\n @! \n[訊息內容]\n"+str(msg_dict[msg_id]["text"]),opi)
+                            sendMention(at,"[抓到！收回訊息者]\n @! \n[訊息內容]\n"+str(msg_dict[msg_id]["text"]),opi)
                             cl.sendMessage(at,"收回時間"+str(timeNow - msg_dict[msg_id]["createdTime"])+"秒之前")
                             del msg_dict[msg_id]
                         elif "stkid" in msg_dict[msg_id]:
                             path = "https://stickershop.line-scdn.net/stickershop/v1/sticker/{}/ANDROID/sticker.png;compress=true".format(msg_dict[msg_id]["stkid"])
-                            sendMention(at,"[收回訊息者]\n @! \n[訊息內容]\n一張貼圖",opi)
+                            sendMention(at,"[抓到！收回訊息者]\n @! \n[訊息內容]\n一張貼圖",opi)
                             cl.sendImageWithURL(at,path)
                             cl.sendMessage(at,"收回時間"+str(timeNow - msg_dict[msg_id]["createdTime"])+"秒之前")
                             del msg_dict[msg_id]
                         elif "mid" in msg_dict[msg_id]:
-                            sendMention(at,"[收回訊息者]\n @! \n[訊息內容]\n一則友資",opi)
+                            sendMention(at,"[抓到！收回訊息者]\n @! \n[訊息內容]\n一則友資",opi)
                             cl.sendContact(at,msg_dict[msg_id]["mid"])
                             cl.sendMessage(at,"收回時間"+str(timeNow - msg_dict[msg_id]["createdTime"])+"秒之前")
                             del msg_dict[msg_id]
@@ -1388,25 +1394,25 @@ def lineBot(op):
                         timeNow = time.time()
                         opi=[msg_dictt[msg_id]["from"]]
                         if "image" in msg_dictt[msg_id]:
-                            sendMention(at,"[收回訊息者]\n @! \n[訊息內容]\n一張圖片",opi)
+                            sendMention(at,"[抓到！收回訊息者]\n @! \n[訊息內容]\n一張圖片",opi)
                             cl.sendImage(at, msg_dictt[msg_id]["object"])
                             cl.sendMessage(at,"收回時間"+str(timeNow - msg_dictt[msg_id]["createdTime"])+"秒之前")
                             cl.deleteFile(msg_dictt[msg_id]["object"])
                             del msg_dictt[msg_id]
                         elif "gif" in msg_dictt[msg_id]:
-                            sendMention(at,"[收回訊息者]\n @! \n[訊息內容]\n一張圖片",opi)
+                            sendMention(at,"[抓到！收回訊息者]\n @! \n[訊息內容]\n一張圖片",opi)
                             cl.sendGIF(at, msg_dictt[msg_id]["object"])
                             cl.sendMessage(at,"收回時間"+str(timeNow - msg_dictt[msg_id]["createdTime"])+"秒之前")
                             cl.deleteFile(msg_dictt[msg_id]["object"])
                             del msg_dictt[msg_id]
                         elif "sound" in msg_dictt[msg_id]:
-                            sendMention(at,"[收回訊息者]\n @! \n[訊息內容]\n一份音檔",opi)
+                            sendMention(at,"[抓到！收回訊息者]\n @! \n[訊息內容]\n一份音檔",opi)
                             cl.sendAudio(at, msg_dictt[msg_id]["object"])
                             cl.sendMessage(at,"收回時間"+str(timeNow - msg_dictt[msg_id]["createdTime"])+"秒之前")
                             cl.deleteFile(msg_dictt[msg_id]["object"])
                             del msg_dictt[msg_id]
                         elif "file" in msg_dictt[msg_id]:
-                            sendMention(at,"[收回訊息者]\n @! \n[訊息內容]\n一個檔案",opi)
+                            sendMention(at,"[抓到！收回訊息者]\n @! \n[訊息內容]\n一個檔案",opi)
                             cl.sendFile(at, msg_dictt[msg_id]["object"])
                             cl.sendMessage(at,"收回時間"+str(timeNow - msg_dictt[msg_id]["createdTime"])+"秒之前")
                             cl.deleteFile(msg_dictt[msg_id]["object"])
