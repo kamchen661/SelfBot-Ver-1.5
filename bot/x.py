@@ -349,6 +349,18 @@ def lineBot(op):
                     a = random.choice(["大吉！！！運氣旺！ヽ(✿ﾟ▽ﾟ)ノ","中吉！運氣好～(ﾟ∀ﾟ)","小吉〜小有手氣(`・ω・´)","末吉〜還可以(,,・ω・,,)","吉〜普普通通～(´･ω･`)","凶〜有點不好(つд⊂)","大凶〜有點悲劇｡･ﾟ･(ﾉД`)ヽ(ﾟДﾟ )"])
                     slot = "您今天的運氣\n{}<==\n以上是您的測試運氣結果".format(a)
                     cl.sendMessage(to,slot)
+                elif text.lower() == '剪刀':
+                    a = random.choice(["我出剪刀-平手啦！","我出石頭-贏你笑你！","我出布-了不起ㄛˇ！","剪刀個屁啊懶得跟你玩"])
+                    slot = "你出剪刀\n{}".format(a)
+                    cl.sendMessage(to,slot)
+                elif text.lower() == '石頭':
+                    a = random.choice(["我出石頭-平手啦！","我出布-贏你笑你！","我出剪刀-了不起ㄛˇ！","石頭個屁啊懶得跟你玩"])
+                    slot = "你出石頭\n{}".format(a)
+                    cl.sendMessage(to,slot)
+                elif text.lower() == '布':
+                    a = random.choice(["我出布-平手啦！","我出剪刀-贏你笑你！","我出石頭-了不起ㄛˇ！","布個屁啊懶得跟你玩"])
+                    slot = "你出布\n{}".format(a)
+                    cl.sendMessage(to,slot)
 
             if sender in ban["admin"] or sender in ban["owners"]:
                 if text.lower() in ['speed','sp']:
